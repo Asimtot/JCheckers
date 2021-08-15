@@ -21,7 +21,7 @@ public class NormalCheckerPiece extends CheckerPiece{
 
 
     @Override
-    public List<Move> calculateNotTakeMoves() {
+    public ArrayList<Move> calculateNotTakeMoves() {
         ArrayList<Move> result = new ArrayList<>();
 
         ArrayList<Move> allTakeMoves = calculateTakeMoves();
@@ -77,12 +77,16 @@ public class NormalCheckerPiece extends CheckerPiece{
 
                         int destinationCoordinate = holderPieceCoordinate + offset;
 
-                        result.add(new Move(currentCoordinate, destinationCoordinate, this));
+                        result.add(new AttackMove(currentCoordinate, destinationCoordinate));
                     }
                 }
             }
         }
         legalMoves = result;
         return result;
+    }
+    @Override
+    public String toString(){
+        return alliance.getAlliance() == Alliance.WHITE ? "K" : "k";
     }
 }

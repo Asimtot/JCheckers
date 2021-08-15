@@ -3,6 +3,7 @@ package piece;
 import board.Board;
 import move.Move;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class KingCheckerPiece extends CheckerPiece{
@@ -13,12 +14,12 @@ public class KingCheckerPiece extends CheckerPiece{
         super(KING_CHECKER_PIECE, tileNumber, alliance, board);
     }
     @Override
-    public List<Move> calculateNotTakeMoves() {
+    public ArrayList<Move> calculateNotTakeMoves() {
         return null;
     }
 
     @Override
-    public List<Move> calculateTakeMoves() {
+    public ArrayList<Move> calculateTakeMoves() {
         return null;
     }
 }
