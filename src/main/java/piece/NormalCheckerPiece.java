@@ -1,6 +1,9 @@
 package piece;
 
+import move.Move;
+
 import java.util.ArrayList;
+import java.util.List;
 
 public class NormalCheckerPiece extends CheckerPiece{
 

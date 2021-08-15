@@ -6,14 +6,12 @@ public class Board {
 
     private Tile[] gameBoard;
     private boolean isTakeMoveExist;
+    private boolean isGameFinished;
 
     public Board(BoardBuilder boardBuilder){
         gameBoard = BoardBuilder.createBoard();
         isTakeMoveExist = false;
-    }
-
-    public boolean isTakeMoveExist(){
-
+        isGameFinished = false;
     }
 
     public static class BoardBuilder {

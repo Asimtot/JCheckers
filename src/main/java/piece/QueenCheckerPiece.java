@@ -1,5 +1,9 @@
 package piece;
 
+import move.Move;
+
+import java.util.List;
+
 public class QueenCheckerPiece extends CheckerPiece {
 
     private static final CheckerPieceType QUEEN_CHECKER_PIECE = CheckerPieceType.QUEEN_CHECKER_PIECE_TYPE;

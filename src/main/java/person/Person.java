@@ -7,7 +7,7 @@ public abstract class Person {
     protected String name;
     protected Alliance alliance;
 
-    public Person(String name, Alliance alliance){
+    protected Person(String name, Alliance alliance){
         this.name = name;
         this.alliance = alliance;
     }
