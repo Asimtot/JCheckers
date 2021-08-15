@@ -30,4 +30,8 @@ public class Tile {
     public int getTileCoordinate(){
         return tileCoordinate;
     }
+
+    public CheckerPiece getPieceOnTile(){
+        return pieceOnTile;
+    }
 }

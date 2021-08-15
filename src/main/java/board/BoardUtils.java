@@ -27,7 +27,7 @@ public class BoardUtils {
 
 
     public static final boolean [] FIRST_COLUMN = createColumn(0);
-    public static final boolean [] SECOND_COLUMN = createColumn(7);
+    public static final boolean [] EIGHTH_COLUMN = createColumn(7);
 
     public static final boolean [] EIGHTH_ROW = createRow(START_OF_THE_EIGHTH_ROW);
     public static final boolean [] SEVENTH_ROW = createRow(START_OF_THE_SEVENTH_ROW);
