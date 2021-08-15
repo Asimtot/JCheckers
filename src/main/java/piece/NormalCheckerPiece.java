@@ -21,13 +21,12 @@ public class NormalCheckerPiece extends CheckerPiece{
 
 
     @Override
-    public List<Move> calculateLegalMoves() {
+    public List<Move> calculateNotTakeMoves() {
         ArrayList<Move> result = new ArrayList<>();
 
         ArrayList<Move> allTakeMoves = calculateTakeMoves();
 
         if(allTakeMoves.isEmpty()){
-
 
             for(int offset : LEGAL_MOVE_OFFSET){
 
@@ -48,11 +47,8 @@ public class NormalCheckerPiece extends CheckerPiece{
 
         }
 
-        else {
-            result.addAll(allTakeMoves);
-        }
+        legalMoves = result;
         return result;
-
     }
 
     @Override
@@ -86,6 +82,7 @@ public class NormalCheckerPiece extends CheckerPiece{
                 }
             }
         }
-        return new ArrayList<>(0);
+        legalMoves = result;
+        return result;
     }
 }

@@ -3,6 +3,7 @@ package piece;
 import board.Board;
 import move.Move;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -28,8 +29,8 @@ public abstract class CheckerPiece {
         return this.checkerPieceType;
     }
 
-    public abstract List<Move> calculateLegalMoves();
-    public abstract List<Move> calculateTakeMoves();
+    public abstract ArrayList<Move> calculateNotTakeMoves();
+    public abstract ArrayList<Move> calculateTakeMoves();
 
     @Override
     public String toString(){

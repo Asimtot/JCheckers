@@ -18,7 +18,7 @@ public class QueenCheckerPiece extends CheckerPiece {
     }
 
     @Override
-    public List<Move> calculateLegalMoves() {
+    public List<Move> calculateNotTakeMoves() {
         ArrayList<Move> result = new ArrayList<>();
 
         ArrayList<Move> allTakeMoves = calculateTakeMoves();

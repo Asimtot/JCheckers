@@ -1,6 +1,10 @@
 package board;
 
+import move.Move;
 import piece.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Board {
 
@@ -8,14 +12,42 @@ public class Board {
     private boolean isTakeMoveExist;
     private boolean isGameFinished;
 
+    private ArrayList<Move> allLegalMovesOnTheBoard;
+
     public Board(BoardBuilder boardBuilder){
         gameBoard = BoardBuilder.createBoard(this);
         isTakeMoveExist = false;
         isGameFinished = false;
+
+        allLegalMovesOnTheBoard = new ArrayList<Move>();
     }
 
     public Tile getTile(int tileNumber){
         return gameBoard[tileNumber];
+    }
+
+    /**
+     *  @version 8.15.2021
+     *  This method is created for searching all the moves on the board
+     */
+    public void searchMovesInTheBoard(){
+
+        for(Tile tile : gameBoard){
+
+            List<Move> tempTakeList = tile.getPieceOnTile().calculateTakeMoves();
+            allLegalMovesOnTheBoard.addAll(tempTakeList);
+        }
+
+        if(!allLegalMovesOnTheBoard.isEmpty()){
+            return; // Terminates the method if there is any take move on the board
+        }
+
+        for(Tile tile : gameBoard){
+
+            List<Move> tempNotTakeList = tile.getPieceOnTile().calculateNotTakeMoves();
+            allLegalMovesOnTheBoard.addAll(tempNotTakeList);
+        }
+
     }
 
     public static class BoardBuilder {
