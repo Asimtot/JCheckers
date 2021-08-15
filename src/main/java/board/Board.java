@@ -42,6 +42,7 @@ public class Board {
          */
         private static Tile createTile(int tileNumber, Board board){
 
+            /*
             if(tileNumber == 3){
                 return new Tile(tileNumber, new KingCheckerPiece(tileNumber, Alliance.BLACK)); // TODO Create Tile with Queen black
             }
@@ -50,7 +51,11 @@ public class Board {
                 return new Tile(tileNumber, new KingCheckerPiece(tileNumber, Alliance.WHITE)); // TODO Create Tile with Queen white
             }
 
-            else if((BoardUtils.EIGHTH_ROW[tileNumber] && tileNumber % 2 == 1)
+            TODO: Right now I only make normal checker pieces to test  8/15/2021
+            */
+
+
+            if((BoardUtils.EIGHTH_ROW[tileNumber] && tileNumber % 2 == 1)
                     || (BoardUtils.SEVENTH_ROW[tileNumber] && tileNumber % 2 == 0)
                     || (BoardUtils.SIXTH_ROW[tileNumber] && tileNumber % 2 == 1)){
 

@@ -83,13 +83,9 @@ public class NormalCheckerPiece extends CheckerPiece{
 
                         result.add(new Move(currentCoordinate, destinationCoordinate, this));
                     }
-
                 }
-
             }
-
         }
-
         return new ArrayList<>(0);
     }
 }
