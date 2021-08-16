@@ -22,6 +22,11 @@ public class BoardUtils {
     private static final int START_OF_THE_SECOND_ROW = 48;
     private static final int START_OF_THE_FIRST_ROW = 56;
 
+    // Other row parts
+    private static final int START_OF_THE_FOURTH_ROW = 32;
+    private static final int START_OF_THE_FIFTH_ROW = 24;
+
+
     public static final int TILES_NUMBER_IN_BOARD = 64; // Number of tiles in the board
     public static final int TILES_NUMBER_IN_COLUMN = 8; // Number of tiles in the column
 
@@ -36,6 +41,9 @@ public class BoardUtils {
     public static final boolean [] THIRD_ROW = createRow(START_OF_THE_THIRD_ROW);
     public static final boolean [] SECOND_ROW = createRow(START_OF_THE_SECOND_ROW);
     public static final boolean [] FIRST_ROW = createRow(START_OF_THE_FIRST_ROW);
+
+    public static final boolean [] FOURTH_ROW = createRow(START_OF_THE_FOURTH_ROW);
+    public static final boolean [] FIFTH_ROW = createRow(START_OF_THE_FIFTH_ROW);
 
 
 
