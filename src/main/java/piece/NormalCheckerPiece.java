@@ -2,6 +2,7 @@ package piece;
 
 import board.Board;
 import board.BoardUtils;
+import move.AttackMove;
 import move.Move;
 
 import java.util.ArrayList;
@@ -77,7 +78,10 @@ public class NormalCheckerPiece extends CheckerPiece{
 
                         int destinationCoordinate = holderPieceCoordinate + offset;
 
-                        result.add(new AttackMove(currentCoordinate, destinationCoordinate));
+                        int takenPlaceCoordinate = currentCoordinate + offset;
+
+                        result.add(new AttackMove(currentCoordinate, destinationCoordinate, this
+                                , board.getTile(takenPlaceCoordinate).getPieceOnTile()));
                     }
                 }
             }
