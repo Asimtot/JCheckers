@@ -19,10 +19,6 @@ public class Tile {
         this.tileCoordinate = tileCoordinate;
     }
 
-    private CheckerPiece pieceOnTile(){
-        return pieceOnTile;
-    }
-
     public boolean isTileEmpty(){
         return pieceOnTile == null ? true : false;
     }
@@ -33,5 +29,12 @@ public class Tile {
 
     public CheckerPiece getPieceOnTile(){
         return pieceOnTile;
+    }
+
+    @Override
+    public String toString(){
+        return "Tile number is tile number: " + tileCoordinate
+                + " Piece On the tile is : " + pieceOnTile ;
+
     }
 }

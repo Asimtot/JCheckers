@@ -3,7 +3,7 @@ package move;
 import piece.CheckerPiece;
 import piece.NormalCheckerPiece;
 
-public class Move {
+public abstract class Move {
 
     protected int currentCoordinate;
     protected int destinationCoordinate;
@@ -22,6 +22,13 @@ public class Move {
     public int getDestinationCoordinate(){
         return this.destinationCoordinate;
     }
+
+    @Override
+    public String toString(){
+        return "Current coordinate is " + currentCoordinate
+                + " Destination coordinate is " + destinationCoordinate;
+    }
+
 
 
 }

@@ -45,7 +45,8 @@ public class BoardUtils {
     public static final boolean [] FOURTH_ROW = createRow(START_OF_THE_FOURTH_ROW);
     public static final boolean [] FIFTH_ROW = createRow(START_OF_THE_FIFTH_ROW);
 
-
+    public static int startTile = 0;
+    public static int endTile = 63;
 
     /**
      *  @param columnNumber
@@ -81,6 +82,12 @@ public class BoardUtils {
 
 
         return result;
+    }
+
+    public static boolean inTheLimit(int tileNumber){
+
+        return tileNumber <= endTile && tileNumber >= 0;
+
     }
 
 }

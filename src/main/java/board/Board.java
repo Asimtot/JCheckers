@@ -8,23 +8,22 @@ import java.util.List;
 
 public class Board {
 
-    private Tile[] gameBoard;
+    private ArrayList<Tile> gameBoard;
     private boolean isTakeMoveExist;
     private boolean isGameFinished;
 
     private ArrayList<Move> allLegalMovesOnTheBoard;
 
-    public Board(BoardBuilder boardBuilder){
-
-        gameBoard = boardBuilder.createBoard(this);
+    public Board(){
+        gameBoard = createBoard();
         isTakeMoveExist = false;
         isGameFinished = false;
+        allLegalMovesOnTheBoard = new ArrayList<>();
 
-        allLegalMovesOnTheBoard = new ArrayList<Move>();
     }
 
     public Tile getTile(int tileNumber){
-        return gameBoard[tileNumber];
+        return gameBoard.get(tileNumber);
     }
 
     /**
@@ -33,13 +32,13 @@ public class Board {
      */
     public void searchMovesInTheBoard(){
 
+        System.out.println("Search in the board method entered--------------");
+
         for(Tile tile : gameBoard){
-
-            System.out.println(tile);
-            System.out.println(tile.getPieceOnTile());
-
-            List<Move> tempTakeList = tile.getPieceOnTile().calculateTakeMoves();
-            allLegalMovesOnTheBoard.addAll(tempTakeList);
+            if(tile.getPieceOnTile() != null){
+                List<Move> tempTakeList = tile.getPieceOnTile().calculateTakeMoves();
+                allLegalMovesOnTheBoard.addAll(tempTakeList);
+            }
         }
 
         if(!allLegalMovesOnTheBoard.isEmpty()){
@@ -48,32 +47,31 @@ public class Board {
 
         for(Tile tile : gameBoard){
 
-            List<Move> tempNotTakeList = tile.getPieceOnTile().calculateNotTakeMoves();
-            allLegalMovesOnTheBoard.addAll(tempNotTakeList);
+            if(tile.getPieceOnTile() != null){
+                List<Move> tempNotTakeList = tile.getPieceOnTile().calculateNotTakeMoves();
+                allLegalMovesOnTheBoard.addAll(tempNotTakeList);
+            }
         }
 
+        System.out.println(allLegalMovesOnTheBoard);
+
     }
-
-    public static class BoardBuilder {
-
         /**
          *  Creating the board
          *  @return
          */
-        public Tile [] createBoard(Board board){
+        public ArrayList<Tile> createBoard(){
 
-            Tile [] result = new Tile[BoardUtils.TILES_NUMBER_IN_BOARD];
+            ArrayList<Tile> result = new ArrayList<>();
 
             for(int a = 0; a < BoardUtils.TILES_NUMBER_IN_BOARD; a++){
 
-                Tile holder = createTile(a, board);
-                result[a] = holder;
+                Tile holder = createTile(a);
 
                 System.out.println(holder);
+
+                result.add(holder);
             }
-
-            System.out.println(result.toString());
-
             return result;
         }
 
@@ -82,7 +80,7 @@ public class Board {
          *  @param tileNumber
          *  @return
          */
-        private Tile createTile(int tileNumber, Board board){
+        private Tile createTile(int tileNumber){
 
             /*
             if(tileNumber == 3){
@@ -101,17 +99,17 @@ public class Board {
                     || (BoardUtils.SEVENTH_ROW[tileNumber] && tileNumber % 2 == 0)
                     || (BoardUtils.SIXTH_ROW[tileNumber] && tileNumber % 2 == 1)){
 
-                return new Tile(tileNumber, new NormalCheckerPiece(tileNumber, Alliance.BLACK, board ));
+                return new Tile(tileNumber, new NormalCheckerPiece(tileNumber, Alliance.BLACK, this ));
             }
 
             else if((BoardUtils.THIRD_ROW[tileNumber] && tileNumber % 2 == 0)
                     || (BoardUtils.SECOND_ROW[tileNumber] && tileNumber % 2 == 1)
                     || (BoardUtils.FIRST_ROW[tileNumber] && tileNumber % 2 == 0)){
 
-                return new Tile(tileNumber, new NormalCheckerPiece(tileNumber, Alliance.WHITE, board));
+                return new Tile(tileNumber, new NormalCheckerPiece(tileNumber, Alliance.WHITE, this));
             }
 
             return new Tile(tileNumber, null);
         }
     }
-}
+

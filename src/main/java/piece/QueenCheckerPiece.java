@@ -2,7 +2,9 @@ package piece;
 
 import board.Board;
 import board.BoardUtils;
+import move.AttackMove;
 import move.Move;
+import move.NormalMove;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +39,7 @@ public class QueenCheckerPiece extends CheckerPiece {
 
                     if (board.getTile(destinationCoordinate).isTileEmpty()) {
 
-                        result.add(new Move(currentCoordinate, destinationCoordinate, this)); // TODO Move class will be done later
+                        result.add(new NormalMove(currentCoordinate, destinationCoordinate, this)); // TODO Move class will be done later
 
                     }
                 }
@@ -78,7 +80,7 @@ public class QueenCheckerPiece extends CheckerPiece {
 
                         int destinationCoordinate = holderPieceCoordinate + offset;
 
-                        result.add(new Move(currentCoordinate, destinationCoordinate, this));
+                        result.add(new NormalMove(currentCoordinate, destinationCoordinate, this));
                     }
                 }
             }

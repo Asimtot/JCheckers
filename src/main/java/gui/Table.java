@@ -31,7 +31,7 @@ public class Table {
 
     public Table(){
 
-        board = new Board(new Board.BoardBuilder());
+        board = new Board();
 
         mainFrame = new JFrame("JChecker");
         mainFrame.setDefaultCloseOperation(3);
@@ -51,7 +51,7 @@ public class Table {
         public BoardPanel(){
             setLayout(new GridLayout(8,8));
             boardTileList = new ArrayList<>();
-            createTile();
+            createTileGUI();
             updatePieces();
         }
 
@@ -59,7 +59,7 @@ public class Table {
             return boardTileList;
         }
 
-        public void createTile(){
+        public void createTileGUI(){
 
             for(int a = 0; a < BoardUtils.TILES_NUMBER_IN_BOARD; a++){
                 BoardTile tileHolder = new BoardTile(a, this);
@@ -509,16 +509,13 @@ public class Table {
                 if(SwingUtilities.isLeftMouseButton(e)){
 
                     board.searchMovesInTheBoard();
-                    CheckerPiece checkerPiece = board.getTile(tileCoordinate).getPieceOnTile();
 
-                    ArrayList<Move> legalMoves = checkerPiece.getLegalMoves();
-
-                    for(Move legalMove : legalMoves){
-
-                        boardPanel.getBoardTileList().get(legalMove.getDestinationCoordinate()).setBackground(Color.orange);
-
+                    if(checkerPiece != null){
+                        ArrayList<Move> legalMoves = checkerPiece.getLegalMoves();
+                        for(Move legalMove : legalMoves){
+                            boardPanel.getBoardTileList().get(legalMove.getDestinationCoordinate()).setBackground(Color.orange);
+                        }
                     }
-
                 }
 
                 else if(SwingUtilities.isRightMouseButton(e)){

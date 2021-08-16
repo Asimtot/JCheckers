@@ -4,6 +4,7 @@ import board.Board;
 import board.BoardUtils;
 import move.AttackMove;
 import move.Move;
+import move.NormalMove;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +16,7 @@ public class NormalCheckerPiece extends CheckerPiece{
 
     public NormalCheckerPiece(int currentCoordinate, Alliance alliance, Board board){
         super(NORMAL_CHECKER_PIECE, currentCoordinate, alliance, board);
+        legalMoves = new ArrayList<>();
     }
 
 
@@ -35,9 +37,13 @@ public class NormalCheckerPiece extends CheckerPiece{
 
                     int destinationCoordinate = currentCoordinate + offset * alliance.getDirection();
 
+                    if(!BoardUtils.inTheLimit(destinationCoordinate)){
+                        continue;
+                    }
+
                     if (board.getTile(destinationCoordinate).isTileEmpty()) {
 
-                        result.add(new Move(currentCoordinate, destinationCoordinate, this)); // TODO Move class will be done later
+                        result.add(new NormalMove(currentCoordinate, destinationCoordinate, this)); // TODO Move class will be done later
 
                     }
                 }
@@ -60,10 +66,20 @@ public class NormalCheckerPiece extends CheckerPiece{
 
             int neighbourTiles = currentCoordinate + offset;
 
+            if(!BoardUtils.inTheLimit(neighbourTiles)){
+                continue;
+            }
+
             if(!((BoardUtils.FIRST_COLUMN[currentCoordinate] && (offset == 9 || offset == -7) )
                     || (BoardUtils.EIGHTH_COLUMN[currentCoordinate] && (offset == 7 || offset == -9)))){
 
                 CheckerPiece holderPiece = board.getTile(neighbourTiles).getPieceOnTile();
+
+                if(holderPiece == null){
+                    continue;
+                }
+
+
 
                 if(holderPiece.checkerPieceType != this.checkerPieceType){
 
