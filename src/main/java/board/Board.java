@@ -15,7 +15,8 @@ public class Board {
     private ArrayList<Move> allLegalMovesOnTheBoard;
 
     public Board(BoardBuilder boardBuilder){
-        gameBoard = BoardBuilder.createBoard(this);
+
+        gameBoard = boardBuilder.createBoard(this);
         isTakeMoveExist = false;
         isGameFinished = false;
 
@@ -33,6 +34,9 @@ public class Board {
     public void searchMovesInTheBoard(){
 
         for(Tile tile : gameBoard){
+
+            System.out.println(tile);
+            System.out.println(tile.getPieceOnTile());
 
             List<Move> tempTakeList = tile.getPieceOnTile().calculateTakeMoves();
             allLegalMovesOnTheBoard.addAll(tempTakeList);
@@ -56,13 +60,19 @@ public class Board {
          *  Creating the board
          *  @return
          */
-        public static Tile [] createBoard(Board board){
+        public Tile [] createBoard(Board board){
 
             Tile [] result = new Tile[BoardUtils.TILES_NUMBER_IN_BOARD];
 
             for(int a = 0; a < BoardUtils.TILES_NUMBER_IN_BOARD; a++){
-                result[a] = createTile(a, board);
+
+                Tile holder = createTile(a, board);
+                result[a] = holder;
+
+                System.out.println(holder);
             }
+
+            System.out.println(result.toString());
 
             return result;
         }
@@ -72,7 +82,7 @@ public class Board {
          *  @param tileNumber
          *  @return
          */
-        private static Tile createTile(int tileNumber, Board board){
+        private Tile createTile(int tileNumber, Board board){
 
             /*
             if(tileNumber == 3){

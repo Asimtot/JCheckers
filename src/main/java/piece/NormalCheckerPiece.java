@@ -11,11 +11,10 @@ import java.util.List;
 public class NormalCheckerPiece extends CheckerPiece{
 
     final static private CheckerPieceType NORMAL_CHECKER_PIECE = CheckerPieceType.NORMAL_CHECKER_PIECE_TYPE;
-    final static int [] LEGAL_MOVE_OFFSET = new int [] {7, 9};
+    final int [] LEGAL_MOVE_OFFSET = new int [] {7, 9};
 
     public NormalCheckerPiece(int currentCoordinate, Alliance alliance, Board board){
         super(NORMAL_CHECKER_PIECE, currentCoordinate, alliance, board);
-        legalMoves = new ArrayList<>();
     }
 
 
