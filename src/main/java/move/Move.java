@@ -15,5 +15,13 @@ public class Move {
         this.checkerPiece = checkerPiece;
     }
 
+    public int getCurrentCoordinate(){
+        return this.currentCoordinate;
+    }
+
+    public int getDestinationCoordinate(){
+        return this.destinationCoordinate;
+    }
+
 
 }

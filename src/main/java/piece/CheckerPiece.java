@@ -16,6 +16,7 @@ public abstract class CheckerPiece {
     protected final Alliance alliance;
     protected final Board board;
     protected boolean isThereAnyTakeMove;
+    protected ArrayList<Move> legalMoves;
 
     protected CheckerPiece(CheckerPieceType checkerPieceType, int currentCoordinate, Alliance alliance, Board board){
         this.checkerPieceType = checkerPieceType;
@@ -47,6 +48,10 @@ public abstract class CheckerPiece {
 
     public Alliance getAlliance(){
         return alliance;
+    }
+
+    public ArrayList<Move> getLegalMoves(){
+        return legalMoves;
     }
 
 }

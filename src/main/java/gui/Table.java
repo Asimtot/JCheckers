@@ -2,10 +2,16 @@ package gui;
 
 import board.Board;
 import board.BoardUtils;
+import move.Move;
 import piece.Alliance;
+import piece.CheckerPiece;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.awt.image.ImageObserver;
 import java.io.File;
@@ -46,19 +52,23 @@ public class Table {
             setLayout(new GridLayout(8,8));
             boardTileList = new ArrayList<>();
             createTile();
-            setPieces();
+            updatePieces();
+        }
+
+        public ArrayList<BoardTile> getBoardTileList(){
+            return boardTileList;
         }
 
         public void createTile(){
 
             for(int a = 0; a < BoardUtils.TILES_NUMBER_IN_BOARD; a++){
-                BoardTile tileHolder = new BoardTile(a);
+                BoardTile tileHolder = new BoardTile(a, this);
                 boardTileList.add(tileHolder);
                 add(tileHolder);
             }
         }
 
-        public void setPieces(){
+        public void updatePieces(){
 
             for(int a = 0; a < BoardUtils.TILES_NUMBER_IN_BOARD; a++){
 
@@ -443,15 +453,15 @@ public class Table {
                 }
 
             }
-
-
         }
 
     }
 
     public class BoardTile extends JPanel{
 
-        public BoardTile(int tileNumber){
+        protected CheckerPiece checkerPiece;
+
+        public BoardTile(int tileNumber, BoardPanel boardPanel){
 
             setLayout(new GridLayout(1,1));
 
@@ -474,6 +484,68 @@ public class Table {
                 setBackground(lightColor);
             }
 
+            addMouseListener(new BoardTileChoose(tileNumber, boardPanel));
+            checkerPiece = board.getTile(tileNumber).getPieceOnTile();
+        }
+
+        /**
+         *  @author Efe Can Tepe
+         *
+         *  Class is created for listening action
+         */
+        public class BoardTileChoose implements MouseListener {
+
+            private int tileCoordinate;
+            private BoardPanel boardPanel;
+
+            public BoardTileChoose(int tileCoordinate, BoardPanel boardPanel){
+                this.tileCoordinate = tileCoordinate;
+                this.boardPanel = boardPanel;
+            }
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+
+                if(SwingUtilities.isLeftMouseButton(e)){
+
+                    board.searchMovesInTheBoard();
+                    CheckerPiece checkerPiece = board.getTile(tileCoordinate).getPieceOnTile();
+
+                    ArrayList<Move> legalMoves = checkerPiece.getLegalMoves();
+
+                    for(Move legalMove : legalMoves){
+
+                        boardPanel.getBoardTileList().get(legalMove.getDestinationCoordinate()).setBackground(Color.orange);
+
+                    }
+
+                }
+
+                else if(SwingUtilities.isRightMouseButton(e)){
+                    System.out.println("Right Mouse: " + tileCoordinate);
+                }
+
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+
+            }
         }
 
     }
