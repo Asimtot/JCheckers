@@ -484,7 +484,7 @@ public class Table {
                 setBackground(lightColor);
             }
 
-            addMouseListener(new BoardTileChoose(tileNumber, boardPanel));
+            addMouseListener(new BoardTileChoose(tileNumber, boardPanel, this));
             checkerPiece = board.getTile(tileNumber).getPieceOnTile();
         }
 
@@ -497,31 +497,32 @@ public class Table {
 
             private int tileCoordinate;
             private BoardPanel boardPanel;
+            private BoardTile boardTile;
 
-            public BoardTileChoose(int tileCoordinate, BoardPanel boardPanel){
+            public BoardTileChoose(int tileCoordinate, BoardPanel boardPanel, BoardTile boardTile){
                 this.tileCoordinate = tileCoordinate;
                 this.boardPanel = boardPanel;
+                this.boardTile = boardTile;
             }
 
             @Override
             public void mouseClicked(MouseEvent e) {
-
                 if(SwingUtilities.isLeftMouseButton(e)){
-
                     board.searchMovesInTheBoard();
+                    boardTile.setCheckerPiece(board.getTile(tileCoordinate).getPieceOnTile());
 
                     if(checkerPiece != null){
                         ArrayList<Move> legalMoves = checkerPiece.getLegalMoves();
                         for(Move legalMove : legalMoves){
+                            System.out.println("For is entered");
                             boardPanel.getBoardTileList().get(legalMove.getDestinationCoordinate()).setBackground(Color.orange);
                         }
                     }
                 }
 
                 else if(SwingUtilities.isRightMouseButton(e)){
-                    System.out.println("Right Mouse: " + tileCoordinate);
+                    System.out.println("Right Mouse");
                 }
-
             }
 
             @Override
@@ -543,6 +544,10 @@ public class Table {
             public void mouseExited(MouseEvent e) {
 
             }
+        }
+
+        public void setCheckerPiece(CheckerPiece checkerPiece){
+            this.checkerPiece = checkerPiece;
         }
 
     }

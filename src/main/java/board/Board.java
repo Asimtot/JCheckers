@@ -12,6 +12,8 @@ public class Board {
     private boolean isTakeMoveExist;
     private boolean isGameFinished;
 
+    private Alliance playerToMakeTheMove;
+
     private ArrayList<Move> allLegalMovesOnTheBoard;
 
     public Board(){
@@ -19,7 +21,7 @@ public class Board {
         isTakeMoveExist = false;
         isGameFinished = false;
         allLegalMovesOnTheBoard = new ArrayList<>();
-
+        playerToMakeTheMove = Alliance.WHITE;
     }
 
     public Tile getTile(int tileNumber){
@@ -32,10 +34,10 @@ public class Board {
      */
     public void searchMovesInTheBoard(){
 
-        System.out.println("Search in the board method entered--------------");
+        System.out.println("Search Moves Entered");
 
         for(Tile tile : gameBoard){
-            if(tile.getPieceOnTile() != null){
+            if(tile.getPieceOnTile() != null ){
                 List<Move> tempTakeList = tile.getPieceOnTile().calculateTakeMoves();
                 allLegalMovesOnTheBoard.addAll(tempTakeList);
             }
@@ -47,7 +49,7 @@ public class Board {
 
         for(Tile tile : gameBoard){
 
-            if(tile.getPieceOnTile() != null){
+            if(tile.getPieceOnTile() != null ){
                 List<Move> tempNotTakeList = tile.getPieceOnTile().calculateNotTakeMoves();
                 allLegalMovesOnTheBoard.addAll(tempNotTakeList);
             }

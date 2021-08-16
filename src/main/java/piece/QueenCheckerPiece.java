@@ -39,7 +39,7 @@ public class QueenCheckerPiece extends CheckerPiece {
 
                     if (board.getTile(destinationCoordinate).isTileEmpty()) {
 
-                        result.add(new NormalMove(currentCoordinate, destinationCoordinate, this)); // TODO Move class will be done later
+                        result.add(new NormalMove(currentCoordinate, destinationCoordinate, this, alliance)); // TODO Move class will be done later
 
                     }
                 }
@@ -80,7 +80,7 @@ public class QueenCheckerPiece extends CheckerPiece {
 
                         int destinationCoordinate = holderPieceCoordinate + offset;
 
-                        result.add(new NormalMove(currentCoordinate, destinationCoordinate, this));
+                        result.add(new NormalMove(currentCoordinate, destinationCoordinate, this, alliance));
                     }
                 }
             }

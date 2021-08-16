@@ -19,36 +19,38 @@ public class NormalCheckerPiece extends CheckerPiece{
         legalMoves = new ArrayList<>();
     }
 
-
+    /**
+     *
+     * @return
+     *
+     * Calculating not take moves
+     */
     @Override
     public ArrayList<Move> calculateNotTakeMoves() {
         ArrayList<Move> result = new ArrayList<>();
 
-        ArrayList<Move> allTakeMoves = calculateTakeMoves();
+        for(int offset : LEGAL_MOVE_OFFSET){
 
-        if(allTakeMoves.isEmpty()){
+            offset *= alliance.getDirection();
 
-            for(int offset : LEGAL_MOVE_OFFSET){
+            System.out.println(offset);
 
-                offset = offset * alliance.getDirection();
+            if(!((BoardUtils.FIRST_COLUMN[currentCoordinate] && offset == 7)
+                    || (BoardUtils.FIRST_COLUMN[currentCoordinate] && offset == -9)
+                    || (BoardUtils.EIGHTH_COLUMN[currentCoordinate] && offset == 9)
+                    || (BoardUtils.EIGHTH_COLUMN[currentCoordinate] && offset == -7))) {
 
-                if(!((BoardUtils.FIRST_COLUMN[currentCoordinate] && (offset == 9 || offset == -7) )
-                        || (BoardUtils.EIGHTH_COLUMN[currentCoordinate] && (offset == 7 || offset == -9)))){
 
-                    int destinationCoordinate = currentCoordinate + offset * alliance.getDirection();
+                int destinationCoordinate = currentCoordinate + offset ;
 
-                    if(!BoardUtils.inTheLimit(destinationCoordinate)){
-                        continue;
-                    }
+                if (!BoardUtils.inTheLimit(destinationCoordinate)) {
+                    continue;
+                }
 
-                    if (board.getTile(destinationCoordinate).isTileEmpty()) {
-
-                        result.add(new NormalMove(currentCoordinate, destinationCoordinate, this)); // TODO Move class will be done later
-
-                    }
+                if (board.getTile(destinationCoordinate).isTileEmpty()) {
+                    result.add(new NormalMove(currentCoordinate, destinationCoordinate, this, alliance)); // TODO Move class will be done later
                 }
             }
-
         }
 
         legalMoves = result;
@@ -70,8 +72,8 @@ public class NormalCheckerPiece extends CheckerPiece{
                 continue;
             }
 
-            if(!((BoardUtils.FIRST_COLUMN[currentCoordinate] && (offset == 9 || offset == -7) )
-                    || (BoardUtils.EIGHTH_COLUMN[currentCoordinate] && (offset == 7 || offset == -9)))){
+            if(!((BoardUtils.FIRST_COLUMN[currentCoordinate] && (offset == 7 || offset == -9) )
+                    && (BoardUtils.EIGHTH_COLUMN[currentCoordinate] && (offset == -7 || offset == -9)))){
 
                 CheckerPiece holderPiece = board.getTile(neighbourTiles).getPieceOnTile();
 
@@ -85,7 +87,7 @@ public class NormalCheckerPiece extends CheckerPiece{
 
                     int holderPieceCoordinate = holderPiece.getCurrentCoordinate();
 
-                    if(!((BoardUtils.FIRST_COLUMN[holderPieceCoordinate] && (offset == 9 || offset == -7) )
+                    if(!((BoardUtils.FIRST_COLUMN[holderPieceCoordinate] && (offset == 9 || offset == -7))
                             || (BoardUtils.EIGHTH_COLUMN[holderPieceCoordinate] && (offset == 7 || offset == -9)))
                             && board.getTile(holderPieceCoordinate).isTileEmpty()){
 

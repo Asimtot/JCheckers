@@ -26,7 +26,7 @@ public abstract class Move {
     @Override
     public String toString(){
         return "Current coordinate is " + currentCoordinate
-                + " Destination coordinate is " + destinationCoordinate;
+                + "\nDestination coordinate is " + destinationCoordinate + "\n";
     }
 
 

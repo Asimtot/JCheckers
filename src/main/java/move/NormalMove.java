@@ -1,16 +1,21 @@
 package move;
 
+import piece.Alliance;
 import piece.CheckerPiece;
 
 public class NormalMove extends Move{
-    public NormalMove(int currentCoordinate, int destinationCoordinate, CheckerPiece checkerPiece) {
+
+    private Alliance alliance;
+
+    public NormalMove(int currentCoordinate, int destinationCoordinate, CheckerPiece checkerPiece, Alliance alliance) {
         super(currentCoordinate, destinationCoordinate, checkerPiece);
+        this.alliance = alliance;
     }
 
     @Override
     public String toString(){
 
-        return  super.toString() + " Piece is " + checkerPiece
-                + "\n ----------------------------" ;
+        return  super.toString() + " Piece is " + checkerPiece + "\n Alliance is: " + alliance.getAlliance() + "\n"
+                + "\n ----------------------------\n" ;
     }
 }
