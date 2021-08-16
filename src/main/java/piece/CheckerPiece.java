@@ -45,5 +45,9 @@ public abstract class CheckerPiece {
         return this.currentCoordinate;
     }
 
+    public Alliance getAlliance(){
+        return alliance;
+    }
+
 }
 
