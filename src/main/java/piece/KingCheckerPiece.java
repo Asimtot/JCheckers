@@ -22,4 +22,9 @@ public class KingCheckerPiece extends CheckerPiece{
     public ArrayList<Move> calculateTakeMoves() {
         return null;
     }
+
+    @Override
+    public Board executeMove(Board board) {
+        return null;
+    }
 }

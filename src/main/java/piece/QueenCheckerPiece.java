@@ -87,4 +87,9 @@ public class QueenCheckerPiece extends CheckerPiece {
         }
         return new ArrayList<>(0);
     }
+
+    @Override
+    public Board executeMove(Board board) {
+        return null;
+    }
 }

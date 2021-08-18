@@ -102,6 +102,18 @@ public class NormalCheckerPiece extends CheckerPiece{
     }
     @Override
     public String toString(){
-        return super.toString() + "\n" + (alliance.getAlliance() == Alliance.WHITE ? "K" : "k");
+        return (alliance.getAlliance() == Alliance.WHITE ? "K" : "k");
     }
+
+    @Override
+    public Board executeMove(Board board) {
+        return null;
+    }
+
+    public Board executeMove(Move move, Board board){
+        board.getTile(move.getDestinationCoordinate()).setPieceOnTile(move.getCheckerPiece());
+        board.getTile(move.getCurrentCoordinate()).setPieceOnTile(null);
+        return board;
+    }
+
 }

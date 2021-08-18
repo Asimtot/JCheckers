@@ -38,6 +38,7 @@ public class Board {
      */
     public void searchMovesInTheBoard(){
 
+        /* TODO: this code block has errors
         for(Tile tile : gameBoard){
             if(tile.getPieceOnTile() != null ){
                 List<Move> tempTakeList = tile.getPieceOnTile().calculateTakeMoves();
@@ -45,9 +46,17 @@ public class Board {
             }
         }
 
+       FIXME: When the search Moves In The Board method first entered we are allLegalMovesOnTheBoard is empty
+              So code reaches the second **for loop**. But once it is executed, all legal moves became not empty
+              and there for we cannot reach the second **for loop**.
+              ---
+              Bug fix suggestion 1: In Every board state only call this method once.
+
         if(!allLegalMovesOnTheBoard.isEmpty()){
             return; // Terminates the method if there is any take move on the board
         }
+
+        */
 
         for(Tile tile : gameBoard){
             if(tile.getPieceOnTile() != null ){

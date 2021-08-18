@@ -29,6 +29,11 @@ public abstract class Move {
                 + "\nDestination coordinate is " + destinationCoordinate + "\n";
     }
 
+    public CheckerPiece getCheckerPiece(){
+        return checkerPiece;
+    }
+
+
 
 
 }
