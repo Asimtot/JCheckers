@@ -37,4 +37,8 @@ public class Tile {
                 + " Piece On the tile is : " + pieceOnTile ;
 
     }
+
+    public void setPieceOnTile(CheckerPiece piece){
+        pieceOnTile = piece;
+    }
 }

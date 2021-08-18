@@ -35,7 +35,7 @@ public abstract class CheckerPiece {
 
     @Override
     public String toString(){
-        return "The piece type is: " + checkerPieceType;
+        return "The piece type is: " + checkerPieceType + "\n ";
     }
 
     protected void setIsThereAnyTakeMove(boolean a){

@@ -30,11 +30,7 @@ public class NormalCheckerPiece extends CheckerPiece{
         ArrayList<Move> result = new ArrayList<>();
 
         for(int offset : LEGAL_MOVE_OFFSET){
-
             offset *= alliance.getDirection();
-
-            System.out.println(offset);
-
             if(!((BoardUtils.FIRST_COLUMN[currentCoordinate] && offset == 7)
                     || (BoardUtils.FIRST_COLUMN[currentCoordinate] && offset == -9)
                     || (BoardUtils.EIGHTH_COLUMN[currentCoordinate] && offset == 9)
@@ -83,17 +79,17 @@ public class NormalCheckerPiece extends CheckerPiece{
 
 
 
-                if(holderPiece.checkerPieceType != this.checkerPieceType){
+                if(holderPiece.getAlliance() != this.getAlliance()){
 
                     int holderPieceCoordinate = holderPiece.getCurrentCoordinate();
 
                     if(!((BoardUtils.FIRST_COLUMN[holderPieceCoordinate] && (offset == 9 || offset == -7))
                             || (BoardUtils.EIGHTH_COLUMN[holderPieceCoordinate] && (offset == 7 || offset == -9)))
-                            && board.getTile(holderPieceCoordinate).isTileEmpty()){
+                            && board.getTile(holderPieceCoordinate + offset).isTileEmpty()){
 
                         int destinationCoordinate = holderPieceCoordinate + offset;
 
-                        int takenPlaceCoordinate = currentCoordinate + offset;
+                        int takenPlaceCoordinate = holderPieceCoordinate;
 
                         result.add(new AttackMove(currentCoordinate, destinationCoordinate, this
                                 , board.getTile(takenPlaceCoordinate).getPieceOnTile()));
@@ -106,6 +102,6 @@ public class NormalCheckerPiece extends CheckerPiece{
     }
     @Override
     public String toString(){
-        return alliance.getAlliance() == Alliance.WHITE ? "K" : "k";
+        return super.toString() + "\n" + (alliance.getAlliance() == Alliance.WHITE ? "K" : "k");
     }
 }

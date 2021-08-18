@@ -28,13 +28,15 @@ public class Board {
         return gameBoard.get(tileNumber);
     }
 
+    public Alliance alliance (){
+        return playerToMakeTheMove;
+    }
+
     /**
      *  @version 8.15.2021
      *  This method is created for searching all the moves on the board
      */
     public void searchMovesInTheBoard(){
-
-        System.out.println("Search Moves Entered");
 
         for(Tile tile : gameBoard){
             if(tile.getPieceOnTile() != null ){
@@ -48,30 +50,20 @@ public class Board {
         }
 
         for(Tile tile : gameBoard){
-
             if(tile.getPieceOnTile() != null ){
                 List<Move> tempNotTakeList = tile.getPieceOnTile().calculateNotTakeMoves();
                 allLegalMovesOnTheBoard.addAll(tempNotTakeList);
             }
         }
-
-        System.out.println(allLegalMovesOnTheBoard);
-
     }
         /**
          *  Creating the board
          *  @return
          */
         public ArrayList<Tile> createBoard(){
-
             ArrayList<Tile> result = new ArrayList<>();
-
             for(int a = 0; a < BoardUtils.TILES_NUMBER_IN_BOARD; a++){
-
                 Tile holder = createTile(a);
-
-                System.out.println(holder);
-
                 result.add(holder);
             }
             return result;
@@ -113,5 +105,7 @@ public class Board {
 
             return new Tile(tileNumber, null);
         }
+
+
     }
 
