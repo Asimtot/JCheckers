@@ -111,8 +111,13 @@ public class NormalCheckerPiece extends CheckerPiece{
     }
 
     public Board executeMove(Move move, Board board){
-        board.getTile(move.getDestinationCoordinate()).setPieceOnTile(move.getCheckerPiece());
+
+        int destinationCoordinate = move.getDestinationCoordinate();
+        Alliance alliance = board.getTile(move.getCurrentCoordinate()).getPieceOnTile().getAlliance();
+
+        board.getTile(move.getDestinationCoordinate()).setPieceOnTile(new NormalCheckerPiece(destinationCoordinate, alliance, board));
         board.getTile(move.getCurrentCoordinate()).setPieceOnTile(null);
+        board.setAlliance(board.alliance().getOpposite());
         return board;
     }
 

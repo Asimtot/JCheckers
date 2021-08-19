@@ -38,7 +38,7 @@ public class Board {
      */
     public void searchMovesInTheBoard(){
 
-        /* TODO: this code block has errors
+        //TODO: this code block has errors
         for(Tile tile : gameBoard){
             if(tile.getPieceOnTile() != null ){
                 List<Move> tempTakeList = tile.getPieceOnTile().calculateTakeMoves();
@@ -46,24 +46,30 @@ public class Board {
             }
         }
 
-       FIXME: When the search Moves In The Board method first entered we are allLegalMovesOnTheBoard is empty
+        /* FIXME: When the search Moves In The Board method first entered we are allLegalMovesOnTheBoard is empty
               So code reaches the second **for loop**. But once it is executed, all legal moves became not empty
               and there for we cannot reach the second **for loop**.
               ---
               Bug fix suggestion 1: In Every board state only call this method once.
 
+        */
+
         if(!allLegalMovesOnTheBoard.isEmpty()){
             return; // Terminates the method if there is any take move on the board
         }
 
-        */
-
         for(Tile tile : gameBoard){
-            if(tile.getPieceOnTile() != null ){
-                List<Move> tempNotTakeList = tile.getPieceOnTile().calculateNotTakeMoves();
-                allLegalMovesOnTheBoard.addAll(tempNotTakeList);
+            if(tile.getPieceOnTile() != null){
+                CheckerPiece checkerPiece = tile.getPieceOnTile();
+                if(checkerPiece.getAlliance() == playerToMakeTheMove){
+                    List<Move> tempNotTakeList = checkerPiece.calculateNotTakeMoves();
+                    allLegalMovesOnTheBoard.addAll(tempNotTakeList);
+                }
             }
         }
+
+        System.out.println("Board class internal representation");
+        representBoard();
     }
         /**
          *  Creating the board
@@ -115,6 +121,34 @@ public class Board {
             return new Tile(tileNumber, null);
         }
 
-
+    private void representBoard(){
+        final StringBuilder builder = new StringBuilder();
+        for(int a = 0; a < BoardUtils.TILES_NUMBER_IN_BOARD; a++){
+            final String tileText = tilePrint(this.getTile(a));
+            builder.append(String.format("%3s", tileText));
+            if((a + 1) % BoardUtils.TILES_NUMBER_IN_COLUMN == 0){
+                builder.append("\n");
+            }
+        }
+        System.out.println(builder.toString());
     }
+
+    private String tilePrint(Tile tile){
+
+        if(tile.getPieceOnTile() == null){
+            return "-";
+        }
+
+        return tile.getPieceOnTile().toString();
+    }
+
+    public void setAlliance(Alliance playerToMakeTheMove){
+        this.playerToMakeTheMove = playerToMakeTheMove;
+    }
+
+    public void setAllLegalMovesOnTheBoard(ArrayList<Move> allLegalMovesOnTheBoard){
+            this.allLegalMovesOnTheBoard = allLegalMovesOnTheBoard;
+    }
+
+}
 

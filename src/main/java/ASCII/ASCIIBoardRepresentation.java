@@ -34,6 +34,7 @@ public class ASCIIBoardRepresentation {
                 builder.append("\n");
             }
         }
+        System.out.println("Turn to Making the board " + board.alliance());
         System.out.println(builder.toString());
     }
 
@@ -76,6 +77,11 @@ public class ASCIIBoardRepresentation {
 
     private void showLegalMoves(int tileCoordinate) {
 
+        if(board.getTile(tileCoordinate).getPieceOnTile() == null){
+            System.out.println("Null piece");
+            return;
+        }
+
         Scanner scan = new Scanner(System.in);
         ArrayList<Move> moveList = new ArrayList<>();
 
@@ -93,8 +99,15 @@ public class ASCIIBoardRepresentation {
 
         NormalCheckerPiece piece = (NormalCheckerPiece)board.getTile(tileCoordinate).getPieceOnTile();
         System.out.println("Pick One");
+
         int choice = scan.nextInt();
-        board = piece.executeMove(moveList.get(choice), board);
+
+        if(choice >= 0 && choice < moveList.size()){
+            board = piece.executeMove(moveList.get(choice), board);
+            return;
+        }
+
+        board.setAllLegalMovesOnTheBoard(new ArrayList<>());
     }
 
 }
