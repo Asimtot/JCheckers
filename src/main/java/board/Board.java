@@ -14,13 +14,15 @@ public class Board {
 
     private Alliance playerToMakeTheMove;
 
-    private ArrayList<Move> allLegalMovesOnTheBoard;
+    private ArrayList<Move> allNotTakeLegalMoves;
+    private ArrayList<Move> allTakeLegalMoves;
 
     public Board(){
         gameBoard = createBoard();
         isTakeMoveExist = false;
         isGameFinished = false;
-        allLegalMovesOnTheBoard = new ArrayList<>();
+        allNotTakeLegalMoves = new ArrayList<>();
+        allTakeLegalMoves = new ArrayList<>();
         playerToMakeTheMove = Alliance.WHITE;
     }
 
@@ -42,11 +44,16 @@ public class Board {
         for(Tile tile : gameBoard){
             if(tile.getPieceOnTile() != null ){
                 List<Move> tempTakeList = tile.getPieceOnTile().calculateTakeMoves();
-                allLegalMovesOnTheBoard.addAll(tempTakeList);
+                allTakeLegalMoves.addAll(tempTakeList);
             }
         }
 
-        /* FIXME: When the search Moves In The Board method first entered we are allLegalMovesOnTheBoard is empty
+        if(!allTakeLegalMoves.isEmpty()){
+            reset();
+            return ;
+        }
+
+        /* FIXME: When the search Moves In The Board method first entered we are allNotTakeLegalMoves is empty
               So code reaches the second **for loop**. But once it is executed, all legal moves became not empty
               and there for we cannot reach the second **for loop**.
               ---
@@ -54,7 +61,7 @@ public class Board {
 
         */
 
-        if(!allLegalMovesOnTheBoard.isEmpty()){
+        if(!allNotTakeLegalMoves.isEmpty()){
             return; // Terminates the method if there is any take move on the board
         }
 
@@ -63,13 +70,14 @@ public class Board {
                 CheckerPiece checkerPiece = tile.getPieceOnTile();
                 if(checkerPiece.getAlliance() == playerToMakeTheMove){
                     List<Move> tempNotTakeList = checkerPiece.calculateNotTakeMoves();
-                    allLegalMovesOnTheBoard.addAll(tempNotTakeList);
+                    allNotTakeLegalMoves.addAll(tempNotTakeList);
                 }
             }
         }
 
         System.out.println("Board class internal representation");
         representBoard();
+        reset();
     }
         /**
          *  Creating the board
@@ -146,9 +154,51 @@ public class Board {
         this.playerToMakeTheMove = playerToMakeTheMove;
     }
 
-    public void setAllLegalMovesOnTheBoard(ArrayList<Move> allLegalMovesOnTheBoard){
-            this.allLegalMovesOnTheBoard = allLegalMovesOnTheBoard;
+    public void setAllNotTakeLegalMoves(ArrayList<Move> allNotTakeLegalMoves){
+            this.allNotTakeLegalMoves = allNotTakeLegalMoves;
     }
+
+    public void setPieceOnTile(int tileNumber, CheckerPiece checkerPiece){
+        gameBoard.get(tileNumber).setPieceOnTile(checkerPiece);
+    }
+
+    private void reset(){
+        allTakeLegalMoves = new ArrayList<>();
+        allNotTakeLegalMoves = new ArrayList<>();
+    }
+
+    public int isGameFinished(){
+        ArrayList<CheckerPiece> whitePieces = new ArrayList<>();
+        ArrayList<CheckerPiece> blackPieces = new ArrayList<>();
+
+        for(Tile tile : gameBoard){
+
+            if(tile.getPieceOnTile() != null){
+
+                CheckerPiece checkerPiece = tile.getPieceOnTile();
+
+                if(checkerPiece.getAlliance() == Alliance.WHITE){
+                    whitePieces.add(checkerPiece);
+                }
+
+                else if(checkerPiece.getAlliance() == Alliance.BLACK){
+                    blackPieces.add(checkerPiece);
+                }
+            }
+
+        }
+
+        if(!whitePieces.isEmpty() && !blackPieces.isEmpty()){
+            return 0;
+        }
+
+        else if(whitePieces.isEmpty()){
+            return -1;
+        }
+
+        return 1;
+    }
+
 
 }
 

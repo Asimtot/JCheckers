@@ -33,7 +33,25 @@ public abstract class Move {
         return checkerPiece;
     }
 
+    @Override
+    public boolean equals(Object other){
+        if(other == null || !(other instanceof Move) ){
+            return false;
+        }
 
+        if(other == this ){
+            return true;
+        }
 
+        Move move = (Move) other;
+
+        return this.destinationCoordinate == move.getDestinationCoordinate()
+                && this.currentCoordinate == move.getCurrentCoordinate();
+    }
+
+    @Override
+    public int hashCode(){
+        return 31 * (destinationCoordinate + currentCoordinate);
+    }
 
 }

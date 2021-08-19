@@ -3,7 +3,9 @@ package ASCII;
 import board.Board;
 import board.BoardUtils;
 import board.Tile;
+import move.AttackMove;
 import move.Move;
+import move.NormalMove;
 import piece.NormalCheckerPiece;
 
 import java.util.ArrayList;
@@ -53,8 +55,21 @@ public class ASCIIBoardRepresentation {
         Scanner scan = new Scanner(System.in);
 
         int a;
+        int result = 0;
 
         do{
+            result = board.isGameFinished();
+
+            if(result == 1){
+                System.out.println("White wins");
+                break;
+            }
+
+            else if(result == -1){
+                System.out.println("Black Wins");
+                break;
+            }
+
             System.out.println("1- Making Move\n2- Exit");
             representBoard();
             a = scan.nextInt();
@@ -88,9 +103,25 @@ public class ASCIIBoardRepresentation {
         int numberOfMoves = 0;
         System.out.println(board.getTile(tileCoordinate).getPieceOnTile().getLegalMoves());
         for(Move move : board.getTile(tileCoordinate).getPieceOnTile().getLegalMoves()){
-            System.out.println("Move " + numberOfMoves + " is: " + move.getCurrentCoordinate() + ":" + move.getDestinationCoordinate());
-            moveList.add(move);
-            numberOfMoves++;
+
+            if(move instanceof NormalMove){
+                System.out.println("Move " + numberOfMoves + " is: " + move.getCurrentCoordinate() + ":" + move.getDestinationCoordinate());
+                moveList.add(move);
+                numberOfMoves++;
+            }
+
+            else if(move instanceof AttackMove){
+                System.out.println("Move "
+                        + numberOfMoves
+                        + " is: "
+                        + move.getCurrentCoordinate()
+                        + ":"
+                        + move.getDestinationCoordinate()
+                        + "\nTaken Piece coordinate is "
+                        + ((AttackMove) move).getTakenPieceCoordinate());
+                moveList.add(move);
+                numberOfMoves++;
+            }
         }
 
         if(moveList.isEmpty()){
@@ -107,7 +138,16 @@ public class ASCIIBoardRepresentation {
             return;
         }
 
-        board.setAllLegalMovesOnTheBoard(new ArrayList<>());
+        board.setAllNotTakeLegalMoves(new ArrayList<>());
     }
 
+    private void declareResult(int result){
+
+        if(result == 1){
+            System.out.println("White won");
+            return;
+        }
+
+        System.out.println("Black Won");
+    }
 }

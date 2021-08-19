@@ -54,10 +54,8 @@ public abstract class CheckerPiece {
         return legalMoves;
     }
 
-    /**
-     *  executes the move on the board
-     */
-    public abstract Board executeMove(Board board);
+    public abstract Board executeMove( Move move , Board board);
+
 
 }
 

@@ -22,10 +22,10 @@ public class PieceRepresentation extends JPanel {
     public final int CIRCLE_CENTER_Y;
 
     private Alliance alliance;
-    private Table.BoardTile boardTile;
+    private BoardTile boardTile;
 
 
-    public PieceRepresentation(Table.BoardTile boardTile, Alliance alliance){
+    public PieceRepresentation(BoardTile boardTile, Alliance alliance){
 
         CIRCLE_RADIUS = 40; //
         CIRCLE_CENTER_X = boardTile.getWidth() / 2;
