@@ -4,8 +4,43 @@ import piece.CheckerPiece;
 
 public class AttackMove extends Move {
 
+    private int takenPieceCoordinate;
+
     public AttackMove(int currentCoordinate, int destinationCoordinate, CheckerPiece checkerPiece,
-                      CheckerPiece takenPiece) {
+                      int takenPieceCoordinate) {
         super(currentCoordinate, destinationCoordinate, checkerPiece);
+        this.takenPieceCoordinate = takenPieceCoordinate;
+    }
+
+    public int getTakenPieceCoordinate(){
+        return this.takenPieceCoordinate;
+    }
+
+    public String toString(){
+        return super.toString() + "Attack Move " + "\nTaken piece coordinate: " + takenPieceCoordinate;
+    }
+
+    @Override
+    public boolean equals(Object other){
+
+        if(other == null){
+            return false;
+        }
+
+        else if(other == this){
+            return true;
+        }
+
+        else {
+            AttackMove attackMove = (AttackMove) other;
+            return currentCoordinate == attackMove.getCurrentCoordinate()
+                    && destinationCoordinate == attackMove.getDestinationCoordinate()
+                    && takenPieceCoordinate == attackMove.getTakenPieceCoordinate();
+        }
+    }
+
+    @Override
+    public int hashCode(){
+         return 31 * (currentCoordinate + destinationCoordinate + takenPieceCoordinate);
     }
 }
