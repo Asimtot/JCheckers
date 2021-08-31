@@ -105,7 +105,15 @@ public class NormalCheckerPiece extends CheckerPiece{
             int destinationCoordinate = move.getDestinationCoordinate();
             Alliance alliance = board.getTile(move.getCurrentCoordinate()).getPieceOnTile().getAlliance();
 
-            board.getTile(move.getDestinationCoordinate()).setPieceOnTile(new NormalCheckerPiece(destinationCoordinate, alliance, board));
+            if(BoardUtils.EIGHTH_ROW[destinationCoordinate] || BoardUtils.FIRST_ROW[destinationCoordinate]){
+                board.getTile(move.getDestinationCoordinate()).setPieceOnTile(new QueenCheckerPiece(destinationCoordinate, alliance, board));
+            }
+
+            else{
+                board.getTile(move.getDestinationCoordinate()).setPieceOnTile(new NormalCheckerPiece(destinationCoordinate, alliance, board));
+
+            }
+
             board.getTile(move.getCurrentCoordinate()).setPieceOnTile(null);
             board.setPieceOnTile(attackMove.getTakenPieceCoordinate(), null); // Terminates the board
 
@@ -119,7 +127,14 @@ public class NormalCheckerPiece extends CheckerPiece{
             int destinationCoordinate = move.getDestinationCoordinate();
             Alliance alliance = board.getTile(move.getCurrentCoordinate()).getPieceOnTile().getAlliance();
 
-            board.getTile(move.getDestinationCoordinate()).setPieceOnTile(new NormalCheckerPiece(destinationCoordinate, alliance, board));
+            if(BoardUtils.EIGHTH_ROW[destinationCoordinate] || BoardUtils.FIRST_ROW[destinationCoordinate]){
+                board.getTile(move.getDestinationCoordinate()).setPieceOnTile(new QueenCheckerPiece(destinationCoordinate, alliance, board));
+            }
+
+            else{
+                board.getTile(move.getDestinationCoordinate()).setPieceOnTile(new NormalCheckerPiece(destinationCoordinate, alliance, board));
+
+            }
             board.getTile(move.getCurrentCoordinate()).setPieceOnTile(null);
         }
 
