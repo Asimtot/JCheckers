@@ -123,7 +123,7 @@ public class NormalCheckerPiece extends CheckerPiece{
 
         }
 
-        else{
+        else if (move instanceof NormalMove){
             int destinationCoordinate = move.getDestinationCoordinate();
             Alliance alliance = board.getTile(move.getCurrentCoordinate()).getPieceOnTile().getAlliance();
 

@@ -2,6 +2,7 @@ package gui;
 
 import board.Board;
 import board.BoardUtils;
+import board.GameStatus;
 import board.Tile;
 import move.AttackMove;
 import move.Move;
@@ -10,6 +11,7 @@ import piece.Alliance;
 import piece.CheckerPiece;
 import piece.NormalCheckerPiece;
 import piece.QueenCheckerPiece;
+import timer.TimeControl;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -24,16 +26,22 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Table extends JPanel {
+public class Table {
 
     private final static Color lightTileColor = new Color(180,180,180);
     private final static Color darkTileColor = new Color(90,80,80);
 
-    public final static Dimension OUTER_FRAME_DIMENSION = new Dimension(600, 600);
-    public final static Dimension Board_PANEL_DIMENSION = new Dimension(400, 350);
-    public final static Dimension TILE_PANEL_DIMENSION = new Dimension(10,10);
+    private final static Dimension CLOCK_DIMENSION = new Dimension(200,200);
+    private final static Dimension CLOCK_PANEL_DIMENSION = new Dimension(200,600);
+    private final static Dimension OUTER_FRAME_DIMENSION = new Dimension(800, 600);
+    private final static Dimension Board_PANEL_DIMENSION = new Dimension(400, 350);
+    private final static Dimension TILE_PANEL_DIMENSION = new Dimension(10,10);
 
-    private ClocksHolderPanel clocksHolderPanel;
+
+    private JPanel clockHolder;
+
+    private ClockPanel whiteClock;
+    private ClockPanel blackClock;
 
     private Board checkerBoard;
 
@@ -43,14 +51,28 @@ public class Table extends JPanel {
     private JLabel playerToMove;
 
     private final JMenuBar menuBar;
+    private final JFrame gameFrame;
     private final BoardPanel boardPanel;
 
 
     public Table(){
 
-        clocksHolderPanel = new ClocksHolderPanel();
+        whiteClock = new ClockPanel(Alliance.WHITE, new TimeControl(0,5,0,2));
+        blackClock = new ClockPanel(Alliance.WHITE, new TimeControl(0,5,0,2));
+
+        whiteClock.setPreferredSize(CLOCK_DIMENSION);
+        blackClock.setPreferredSize(CLOCK_DIMENSION);
+
+        this.clockHolder = new JPanel();
+
+        this.clockHolder.setLayout(new GridLayout(3,1));
+
+        this.clockHolder.add(blackClock, BorderLayout.CENTER);
+        this.clockHolder.add(new JPanel());
+        this.clockHolder.add(whiteClock, BorderLayout.CENTER);
 
         this.checkerBoard = new Board();
+        this.gameFrame = new JFrame("JCheckers");
         this.menuBar = new JMenuBar();
         this.playerToMove = new JLabel();
 
@@ -58,11 +80,18 @@ public class Table extends JPanel {
 
         menuBar.add(playerToMove);
 
-        setLayout(new BorderLayout());
-        setSize(OUTER_FRAME_DIMENSION);
+        this.gameFrame.setLayout(new BorderLayout());
+        this.gameFrame.setSize(OUTER_FRAME_DIMENSION);
+        this.gameFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.boardPanel = new BoardPanel();
-        add(this.boardPanel, BorderLayout.CENTER);
-        setVisible(true);
+        this.gameFrame.setJMenuBar(menuBar);
+        this.gameFrame.add(this.boardPanel, BorderLayout.CENTER);
+        this.gameFrame.add(this.clockHolder, BorderLayout.EAST);
+        clockHolder.setPreferredSize(CLOCK_PANEL_DIMENSION);
+
+
+        this.gameFrame.setVisible(true);
+
     }
 
     private class BoardPanel extends JPanel{
@@ -172,7 +201,27 @@ public class Table extends JPanel {
                 SwingUtilities.invokeLater(new Runnable() {
                     @Override
                     public void run() {
+
+                        if(checkerBoard.alliance() == Alliance.WHITE){
+                            whiteClock.getClock().start();
+                            blackClock.getClock().stop();
+                        }
+
+                        else if(checkerBoard.alliance() == Alliance.BLACK){
+                            blackClock.getClock().start();
+                            whiteClock.getClock().stop();
+                        }
+
                         boardPanel.drawBoard(checkerBoard);
+
+                        if(checkerBoard.isGameFinished() == GameStatus.WHITE_WIN.getStatus()){
+                            JOptionPane.showMessageDialog(null, "White Win");
+                        }
+
+                        else if(checkerBoard.isGameFinished() == GameStatus.BLACK_WIN.getStatus()){
+                            JOptionPane.showMessageDialog(null, "Black Win");
+                        }
+
                     }
                 });
             });
@@ -236,7 +285,7 @@ public class Table extends JPanel {
                         || BoardUtils.EIGHTH_ROW[this.tileId]) {
                     setBackground(this.tileId % 2 == 0 ? lightTileColor : darkTileColor);
                 }
-
             }
+
         }
 }

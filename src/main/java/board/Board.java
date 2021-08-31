@@ -197,14 +197,14 @@ public class Board {
         }
 
         if(!whitePieces.isEmpty() && !blackPieces.isEmpty()){
-            return 0;
+            return GameStatus.GAME_IS_ON.getStatus();
         }
 
         else if(whitePieces.isEmpty()){
-            return -1;
+            return GameStatus.BLACK_WIN.getStatus();
         }
 
-        return 1;
+        return GameStatus.WHITE_WIN.getStatus();
     }
 
     public Alliance getCurrentPlayerToMove(){
