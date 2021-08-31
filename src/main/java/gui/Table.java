@@ -24,14 +24,16 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Table {
+public class Table extends JPanel {
 
     private final static Color lightTileColor = new Color(180,180,180);
     private final static Color darkTileColor = new Color(90,80,80);
 
-    private final static Dimension OUTER_FRAME_DIMENSION = new Dimension(600, 600);
-    private final static Dimension Board_PANEL_DIMENSION = new Dimension(400, 350);
-    private final static Dimension TILE_PANEL_DIMENSION = new Dimension(10,10);
+    public final static Dimension OUTER_FRAME_DIMENSION = new Dimension(600, 600);
+    public final static Dimension Board_PANEL_DIMENSION = new Dimension(400, 350);
+    public final static Dimension TILE_PANEL_DIMENSION = new Dimension(10,10);
+
+    private ClocksHolderPanel clocksHolderPanel;
 
     private Board checkerBoard;
 
@@ -41,13 +43,14 @@ public class Table {
     private JLabel playerToMove;
 
     private final JMenuBar menuBar;
-    private final JFrame gameFrame;
     private final BoardPanel boardPanel;
 
 
     public Table(){
+
+        clocksHolderPanel = new ClocksHolderPanel();
+
         this.checkerBoard = new Board();
-        this.gameFrame = new JFrame("JCheckers");
         this.menuBar = new JMenuBar();
         this.playerToMove = new JLabel();
 
@@ -55,15 +58,11 @@ public class Table {
 
         menuBar.add(playerToMove);
 
-        this.gameFrame.setLayout(new BorderLayout());
-        this.gameFrame.setSize(OUTER_FRAME_DIMENSION);
-        this.gameFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setLayout(new BorderLayout());
+        setSize(OUTER_FRAME_DIMENSION);
         this.boardPanel = new BoardPanel();
-        this.gameFrame.setJMenuBar(menuBar);
-        this.gameFrame.add(this.boardPanel, BorderLayout.CENTER);
-
-        this.gameFrame.setVisible(true);
-
+        add(this.boardPanel, BorderLayout.CENTER);
+        setVisible(true);
     }
 
     private class BoardPanel extends JPanel{

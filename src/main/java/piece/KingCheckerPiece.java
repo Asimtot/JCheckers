@@ -6,6 +6,9 @@ import move.Move;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ *   TODO: This class will be written in the different updates
+ */
 public class KingCheckerPiece extends CheckerPiece{
 
     private static final CheckerPieceType KING_CHECKER_PIECE = CheckerPieceType.KING_CHECKER_PIECE_TYPE;
