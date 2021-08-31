@@ -167,6 +167,14 @@ public class Board {
         allNotTakeLegalMoves = new ArrayList<>();
     }
 
+    public ArrayList<Move> getAllTakeLegalMoves(){
+            return allTakeLegalMoves;
+    }
+
+    public ArrayList<Move> getNotAllTakeLegalMoves(){
+        return allNotTakeLegalMoves;
+    }
+
     public int isGameFinished(){
         ArrayList<CheckerPiece> whitePieces = new ArrayList<>();
         ArrayList<CheckerPiece> blackPieces = new ArrayList<>();
@@ -197,6 +205,10 @@ public class Board {
         }
 
         return 1;
+    }
+
+    public Alliance getCurrentPlayerToMove(){
+            return  alliance();
     }
 
 
