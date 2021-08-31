@@ -57,8 +57,8 @@ public class Table {
 
     public Table(){
 
-        whiteClock = new ClockPanel(Alliance.WHITE, new TimeControl(0,5,0,2));
-        blackClock = new ClockPanel(Alliance.WHITE, new TimeControl(0,5,0,2));
+        whiteClock = new ClockPanel(Alliance.WHITE, new TimeControl(0,0,10,0));
+        blackClock = new ClockPanel(Alliance.WHITE, new TimeControl(0,0,10,0));
 
         whiteClock.setPreferredSize(CLOCK_DIMENSION);
         blackClock.setPreferredSize(CLOCK_DIMENSION);

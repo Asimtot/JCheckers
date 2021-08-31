@@ -17,6 +17,11 @@ public enum Alliance {
         public Alliance getOpposite() {
             return WHITE;
         }
+
+        @Override
+        public String toString() {
+            return "Black";
+        }
     },
 
     WHITE{
@@ -34,10 +39,16 @@ public enum Alliance {
         public Alliance getOpposite() {
             return BLACK;
         }
+
+        @Override
+        public String toString() {
+            return "White";
+        }
     };
 
     public abstract int getDirection();
     public abstract Alliance getAlliance();
     public abstract Alliance getOpposite();
+    public abstract String toString();
 
 }

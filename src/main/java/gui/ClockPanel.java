@@ -13,7 +13,7 @@ public class ClockPanel extends JPanel {
     private Clock clock;
 
     public ClockPanel(Alliance alliance, TimeControl timeControl){
-        clock = new Clock(alliance, new TimeControl(0,5,5,2), this);
+        clock = new Clock(alliance, timeControl, this);
         timeLabel = new JLabel();
         timeLabel.setFont(new Font("Serif",Font.PLAIN, 50));
         timeLabel.setBorder(BorderFactory.createBevelBorder(1));
