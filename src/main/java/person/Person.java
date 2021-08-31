@@ -1,5 +1,6 @@
 package person;
 
+import board.Board;
 import piece.Alliance;
 
 public abstract class Person {
@@ -7,7 +8,7 @@ public abstract class Person {
     protected String name;
     protected Alliance alliance;
 
-    protected Person(String name, Alliance alliance){
+    protected Person(String name, Alliance alliance, Board gameBoard){
         this.name = name;
         this.alliance = alliance;
     }
