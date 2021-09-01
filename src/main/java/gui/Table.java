@@ -31,6 +31,7 @@ public class Table {
     private final static Color lightTileColor = new Color(180,180,180);
     private final static Color darkTileColor = new Color(90,80,80);
 
+    public final static Dimension NOTATION_DIMENSION = new Dimension(200,200);
     private final static Dimension CLOCK_DIMENSION = new Dimension(200,200);
     private final static Dimension CLOCK_PANEL_DIMENSION = new Dimension(200,600);
     private final static Dimension OUTER_FRAME_DIMENSION = new Dimension(800, 600);
@@ -38,6 +39,7 @@ public class Table {
     private final static Dimension TILE_PANEL_DIMENSION = new Dimension(10,10);
 
 
+    private NotationPanel notationPanel;
     private JPanel clockHolder;
 
     private ClockPanel whiteClock;
@@ -57,19 +59,24 @@ public class Table {
 
     public Table(){
 
-        whiteClock = new ClockPanel(Alliance.WHITE, new TimeControl(0,0,10,0));
-        blackClock = new ClockPanel(Alliance.WHITE, new TimeControl(0,0,10,0));
+        notationPanel = new NotationPanel();
+
+        whiteClock = new ClockPanel(Alliance.WHITE, new TimeControl(0,5,10,0));
+        blackClock = new ClockPanel(Alliance.WHITE, new TimeControl(0,5,10,0));
 
         whiteClock.setPreferredSize(CLOCK_DIMENSION);
         blackClock.setPreferredSize(CLOCK_DIMENSION);
 
         this.clockHolder = new JPanel();
 
-        this.clockHolder.setLayout(new GridLayout(3,1));
+        this.clockHolder.setLayout(new BorderLayout());
 
-        this.clockHolder.add(blackClock, BorderLayout.CENTER);
-        this.clockHolder.add(new JPanel());
-        this.clockHolder.add(whiteClock, BorderLayout.CENTER);
+        this.clockHolder.add(blackClock, BorderLayout.NORTH);
+        blackClock.setPreferredSize(new Dimension(100,100));
+        this.clockHolder.add(notationPanel, BorderLayout.CENTER);
+        notationPanel.setPreferredSize(NOTATION_DIMENSION);
+        this.clockHolder.add(whiteClock, BorderLayout.SOUTH);
+        whiteClock.setPreferredSize(new Dimension(100,100));
 
         this.checkerBoard = new Board();
         this.gameFrame = new JFrame("JCheckers");
@@ -100,6 +107,7 @@ public class Table {
         BoardPanel(){
             super(new GridLayout(8,8));
             this.boardTiles = new ArrayList<>();
+            this.setBorder(BorderFactory.createBevelBorder(0));
 
             for(int i = 0; i < BoardUtils.TILES_NUMBER_IN_BOARD; i++){
                 final TilePanel tilePanel = new TilePanel(this, i);
@@ -171,9 +179,10 @@ public class Table {
                         }
 
                         for( Move candidateMove : candidateMoveList){
-
                             if(candidateMove.equals(move)){
+                                notationPanel.addMoveToTextArea(checkerBoard.alliance(), move);
                                 checkerBoard = humanMovedPiece.executeMove(move, checkerBoard);
+                                break;
                             }
 
                         }
