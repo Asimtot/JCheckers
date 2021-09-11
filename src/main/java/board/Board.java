@@ -27,7 +27,10 @@ public class Board {
     }
 
     public Tile getTile(int tileNumber){
-        return gameBoard.get(tileNumber);
+        if(BoardUtils.inTheLimit(tileNumber)){
+            return gameBoard.get(tileNumber);
+        }
+        throw new IndexOutOfBoundsException("You Pass Tile Number Wrong");
     }
 
     public Alliance alliance (){
@@ -39,7 +42,6 @@ public class Board {
      *  This method is created for searching all the moves on the board
      */
     public void searchMovesInTheBoard(){
-
         //TODO: this code block has errors
         for(Tile tile : gameBoard){
             if(tile.getPieceOnTile() != null ){
