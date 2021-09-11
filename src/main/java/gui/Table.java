@@ -156,14 +156,16 @@ public class Table {
                 }
 
                 else{
+
+                    System.out.println("Human Moved Piece is: \n" + humanMovedPiece);
                     Move move = null;
                     destinationTile = checkerBoard.getTile(tileId);
-
                     checkerBoard.searchMovesInTheBoard();
 
-                    final List<Move> candidateMoveList = humanMovedPiece.getLegalMoves();
+                    System.out.println("Human Moved Piece Legal Moves" + humanMovedPiece.getLegalMoves());
 
-                    if(!candidateMoveList.isEmpty()){
+                    final List<Move> candidateMoveList = humanMovedPiece.getLegalMoves();
+                    if(candidateMoveList != null && !candidateMoveList.isEmpty()){
                         if(candidateMoveList.get(0) instanceof NormalMove){
                             move = new NormalMove(sourceTile.getTileCoordinate()
                                     ,destinationTile.getTileCoordinate(), humanMovedPiece, humanMovedPiece.getAlliance() );

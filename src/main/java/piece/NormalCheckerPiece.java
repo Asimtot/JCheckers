@@ -84,7 +84,6 @@ public class NormalCheckerPiece extends CheckerPiece{
             }
 
         }
-
         legalMoves = takeMoves;
         return legalMoves;
 
@@ -95,10 +94,17 @@ public class NormalCheckerPiece extends CheckerPiece{
     }
 
 
+    /**
+     *  @param move
+     *  @param board
+     *  @return
+     *
+     *  Executes the move on the board and the returns new board
+     */
+
+    @Override
     public Board executeMove(Move move, Board board){
-
         boolean isThereAnyTakeMove = false;
-
         if(move instanceof AttackMove){
 
             AttackMove attackMove = (AttackMove) move;
@@ -111,7 +117,6 @@ public class NormalCheckerPiece extends CheckerPiece{
 
             else{
                 board.getTile(move.getDestinationCoordinate()).setPieceOnTile(new NormalCheckerPiece(destinationCoordinate, alliance, board));
-
             }
 
             board.getTile(move.getCurrentCoordinate()).setPieceOnTile(null);
@@ -126,17 +131,17 @@ public class NormalCheckerPiece extends CheckerPiece{
         else if (move instanceof NormalMove){
             int destinationCoordinate = move.getDestinationCoordinate();
             Alliance alliance = board.getTile(move.getCurrentCoordinate()).getPieceOnTile().getAlliance();
-
             if(BoardUtils.EIGHTH_ROW[destinationCoordinate] || BoardUtils.FIRST_ROW[destinationCoordinate]){
                 board.getTile(move.getDestinationCoordinate()).setPieceOnTile(new QueenCheckerPiece(destinationCoordinate, alliance, board));
             }
-
             else{
                 board.getTile(move.getDestinationCoordinate()).setPieceOnTile(new NormalCheckerPiece(destinationCoordinate, alliance, board));
 
             }
             board.getTile(move.getCurrentCoordinate()).setPieceOnTile(null);
         }
+
+        System.out.println(board);
 
         if(isThereAnyTakeMove){
             board.setAlliance(board.alliance().getAlliance());
