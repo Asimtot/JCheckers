@@ -2,7 +2,8 @@ package timer;
 
 import gui.ClockPanel;
 import piece.Alliance;
-import javax.swing.Timer;
+
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.TimerTask;
@@ -40,14 +41,30 @@ public class Clock {
                                     + (minutes * MINUTES_IN_MILLISECONDS)
                                     + (seconds * SECONDS_IN_MILLISECONDS);
 
+        ActionListener listener = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        };
+
         clock = new Timer(1000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                totalTimeInMilliSeconds -= 1000;
-                hours = (int) (totalTimeInMilliSeconds / HOURS_IN_MILLISECONDS);
-                minutes = (int) ((totalTimeInMilliSeconds / MINUTES_IN_MILLISECONDS)) % 60;
-                seconds = (int) ((totalTimeInMilliSeconds / SECONDS_IN_MILLISECONDS)) % 60;
-                clockPanel.updateTimeLabel();
+
+
+                if(totalTimeInMilliSeconds != 0){
+                    totalTimeInMilliSeconds -= 1000;
+                    hours = (int) (totalTimeInMilliSeconds / HOURS_IN_MILLISECONDS);
+                    minutes = (int) ((totalTimeInMilliSeconds / MINUTES_IN_MILLISECONDS)) % 60;
+                    seconds = (int) ((totalTimeInMilliSeconds / SECONDS_IN_MILLISECONDS)) % 60;
+                    clockPanel.updateTimeLabel();
+                }
+
+                if(isFlagDown()){
+                    JOptionPane.showMessageDialog(null, alliance.getOpposite().toString() + " Won ");
+                    System.exit(3);
+                }
             }
         });
 
@@ -75,11 +92,11 @@ public class Clock {
 
 
     public void start(){
+        totalTimeInMilliSeconds += bonusTimePerMove * SECONDS_IN_MILLISECONDS;
         clock.start();
     }
 
     public void stop(){
-        totalTimeInMilliSeconds += bonusTimePerMove * SECONDS_IN_MILLISECONDS;
         clock.stop();
     }
 

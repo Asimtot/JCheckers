@@ -14,8 +14,6 @@ public class NormalMove extends Move{
 
     @Override
     public String toString(){
-
-        return  super.toString() + " NormalMove " + " Piece is " + checkerPiece + "\n Alliance is: " + alliance.getAlliance() + "\n"
-                + "\n ----------------------------\n" ;
+        return  super.toString();
     }
 }

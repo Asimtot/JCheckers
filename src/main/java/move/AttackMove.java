@@ -17,7 +17,7 @@ public class AttackMove extends Move {
     }
 
     public String toString(){
-        return super.toString() + "Attack Move " + "\nTaken piece coordinate: " + takenPieceCoordinate;
+        return super.toString();
     }
 
     @Override
