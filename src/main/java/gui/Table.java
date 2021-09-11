@@ -38,6 +38,7 @@ public class Table {
     private final static Dimension Board_PANEL_DIMENSION = new Dimension(400, 350);
     private final static Dimension TILE_PANEL_DIMENSION = new Dimension(10,10);
 
+    private int moveCount;
 
     private NotationPanel notationPanel;
     private JPanel clockHolder;
@@ -58,9 +59,9 @@ public class Table {
 
 
     public Table(){
+        moveCount = 0;
 
         notationPanel = new NotationPanel();
-
         whiteClock = new ClockPanel(Alliance.WHITE, new TimeControl(0,5,10,0));
         blackClock = new ClockPanel(Alliance.WHITE, new TimeControl(0,5,10,0));
 
@@ -74,7 +75,6 @@ public class Table {
         this.clockHolder.add(blackClock, BorderLayout.NORTH);
         blackClock.setPreferredSize(new Dimension(100,100));
         this.clockHolder.add(notationPanel, BorderLayout.CENTER);
-        notationPanel.setPreferredSize(NOTATION_DIMENSION);
         this.clockHolder.add(whiteClock, BorderLayout.SOUTH);
         whiteClock.setPreferredSize(new Dimension(100,100));
 
@@ -180,8 +180,9 @@ public class Table {
 
                         for( Move candidateMove : candidateMoveList){
                             if(candidateMove.equals(move)){
-                                notationPanel.addMoveToTextArea(checkerBoard.alliance(), move);
                                 checkerBoard = humanMovedPiece.executeMove(move, checkerBoard);
+                                notationPanel.update(move, moveCount / 2, moveCount % 2);
+                                moveCount++;
                                 break;
                             }
 

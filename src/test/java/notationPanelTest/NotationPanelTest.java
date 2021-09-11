@@ -1,60 +1,53 @@
-package gui;
+package notationPanelTest;
 
-import move.AttackMove;
+import board.Board;
 import move.Move;
-import move.NormalMove;
-import piece.Alliance;
 
-import javax.naming.event.ObjectChangeListener;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.*;
-import javax.swing.event.TableModelEvent;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.util.List;
-import java.util.ArrayList;
 
-public class NotationPanel extends JPanel {
+public class NotationPanelTest extends JPanel {
 
-    private static final String [] NAMES = {"White", "Black"};
+    private static final Dimension HISTORY_PANEL_DIMENSION = new Dimension(100,400);
 
     private final DataModel model;
     private final JScrollPane scrollPane;
 
-    public NotationPanel(){
+    NotationPanelTest(){
         this.setLayout(new BorderLayout());
         this.model = new DataModel();
         final JTable table = new JTable(model);
         table.setRowHeight(15);
-        scrollPane = new JScrollPane(table);
+        this.scrollPane = new JScrollPane();
         scrollPane.setColumnHeaderView(table.getTableHeader());
-        scrollPane.setPreferredSize(Table.NOTATION_DIMENSION);
+        scrollPane.setPreferredSize(HISTORY_PANEL_DIMENSION);
         this.add(scrollPane, BorderLayout.CENTER);
         this.setVisible(true);
     }
 
-    public DataModel getModel(){
-        return model;
+    /*
+    void redo(final Board board, final MoveLog moveLog){
+
+        int currentRow = 0;
+        this.model.clear();
+
+        for(final Move move : moveLog.getMoves()){
+
+            final String moveText = move.toString().isWhite();
+        }
     }
+    */
 
-    public void update(Move move, int row, int column){
-        model.setValueAt(move.toString(), row, column);
+    private static class DataModel extends DefaultTableModel{
 
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                validate();
-                repaint();
-            }
-        });
+        private static final String [] NAMES = {"White", "Black"};
+        private final List<Row> values;
 
-    }
-
-    public static class DataModel extends DefaultTableModel{
-
-        private List<Row> values;
-
-        public DataModel(){
-            values = new ArrayList<>();
+        DataModel(){
+            this.values = new ArrayList<>();
         }
 
         public void clear(){
@@ -67,7 +60,6 @@ public class NotationPanel extends JPanel {
             if(this.values == null){
                 return 0;
             }
-
             return this.values.size();
         }
 
@@ -76,6 +68,7 @@ public class NotationPanel extends JPanel {
             return NAMES.length;
         }
 
+        @Override
         public Object getValueAt(final int row, final int column){
             final Row currentRow = this.values.get(row);
 
@@ -99,18 +92,17 @@ public class NotationPanel extends JPanel {
                 this.values.add(currentRow);
             }
 
-            else{
+            else {
                 currentRow = this.values.get(row);
             }
 
             if(column == 0){
                 currentRow.setWhiteMove((String) aValue);
-                fireTableDataChanged();
             }
 
             else if(column == 1){
                 currentRow.setBlackMove((String) aValue);
-                fireTableDataChanged();
+                fireTableCellUpdated(row, column);
             }
 
         }
@@ -126,34 +118,31 @@ public class NotationPanel extends JPanel {
         }
     }
 
-    public static class Row{
+    private static class Row{
 
         private String whiteMove;
         private String blackMove;
 
-        public Row(){
+        Row(){
 
         }
 
         public String getWhiteMove(){
-            return whiteMove;
+            return this.whiteMove;
         }
 
         public String getBlackMove(){
-            return blackMove;
+            return this.blackMove;
         }
 
-        public void setWhiteMove(String move){
-            whiteMove = move;
+        public void setWhiteMove(final String move){
+            this.whiteMove = move;
         }
 
-        public void setBlackMove(String move){
-            blackMove = move;
+        public void setBlackMove(final String move){
+            this.blackMove = move;
         }
 
-        @Override
-        public String toString(){
-            return "White Move: " + whiteMove + " Black Move: " + blackMove;
-        }
     }
+
 }
